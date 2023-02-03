@@ -5,14 +5,14 @@ const User = db.user
 const Op = db.Sequelize.Op
 
 exports.search = (req, res) => {
-  // const lat = parseFloat(req.query.lat)
-  // const lng = parseFloat(req.query.lng)
   const { title } = req.query
   let condition = title ? { title: { [Op.like]: `%${title}%` } } : null
 
   Book.findAll({
-   ...condition,
-    include: Image
+  where :{
+  ...condition,
+  },
+  include:Image,
   })
     .then((result) => {
       res.status(200).json({
